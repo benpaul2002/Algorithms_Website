@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Greedy</title>
+        
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="../css/Greedy.css">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="navbar">
+            <a href="index.html">Home</a>
+            <a href="DnC.html">Divide & Conquer</a>
+            <a href="Greedy.html">Greedy</a>
+            <a href="DP.html">Dynamic Programming</a>
+        </div>
+        
+        <div class="div1">
+            <a id="greedy"></a>
+            <p class="header">Greedy Algorithms</p>
+            <hr>
+        </div>
+        
+        <div class="div2">
+            <h1>Introduction</h1>
+            <p>
+                Greedy Algorithms are a class of algorithms in which a problem is solved in several
+                steps. Each step is chosen so as to provide some immediate benefit (so, if a particular
+                step is slightly slower, it won't be chosen, even if it was an overall better choice).
+                Hence the name 'Greedy'. <br><br>
+                All greedy algorithms have a similar basic design with two properties - <br><br>
+                &emsp; <b>1. Greedy Choice Property</b> <br>
+                &emsp;&emsp; This refers to whether we know the first step towards the correct (optimum) solution. <br><br>
+                &emsp; <b>2. Optimum Substructure Property</b> <br>
+                &emsp;&emsp; This refers to whether, after the first step, the problem can be rephrased as a smaller 
+                version of the original problem. <br><br>
+                &emsp; This way, we are recursively making the problem smaller and smaller until it becomes 
+                trivial to solve. <br><br>
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="div2">
+            <a id="activity"></a>
+            <h1>Activity Selection</h1>
+            <p>
+                In this problem, we have a set of activities, each having a start and a finish time. We need to 
+                select the largest possible set of activities that are not overlapping. Note - we want the set 
+                with the highest cardinality, not the one having most time. <br><br>
+                So, we have \(S = \{a_1, a_2, ..., a_n\}\), where \(a_i = [s_i, f_i)\) - \(s_i\) being the start 
+                time and \(f_i\) being the finish time. <br><br>
+                To solve this problem using a greedy algorithm, we need to follow the two properties from the
+                basic design. For this, we need to first find out which of the activity sets is guaranteed to be 
+                in a optimal solution (there can be several optimal solutions). <br><br>
+                The activity with the least finish time (which finishes first) will be in some optimal solution. 
+                How do we know this?<br> 
+                Let's say \(A = \{a_1, a_2, ...., a_n\}\) is the optimal solution set, with each element arranged 
+                in increasing order of finish time. Let \(a_{min}\) be the activity with least finishing time. 
+                If \(a_{min}\) is equal to \(a_1\), then we don't have anything to prove. If it isn't, then let's 
+                construct a new set \(B\) with the same elements as \(A\), except with \(a_{min}\) in place of 
+                \(a_1\). Since \(a_{min}\) has the least finish time, it finishes before \(a_1\) and so, will not 
+                overlap with the other sets in \(B\). Therefore, \(B\) is also a valid optimal solution. <br><br>
+                Now that we have found out the first step of the problem, we can make the problem smaller by 
+                considering only those sets that don't overlap with \(a_{min}\). After this, induction follows 
+                and the problem is solved.<br><br>
+                Consider the below example - <br>
+            </p>
+            <img class="as_img" src="../img/activity_selection.png">
+            <p>
+                (Graph generated using online.visual-paradigm.com) <br>
+                (Please note that the colour of the bars have no significance) <br><br>
+                Here, we have \(S=\{A_1, A_2, A_3, A_4, A_5, A_6, A_7, A_8, A_9\}\), where <br>
+                \[A_1=[1,6)\]
+                \[A_2=[2,3)\]
+                \[A_3=[4,6)\]
+                \[A_4=[3,7)\]
+                \[A_5=[5,10)\]
+                \[A_6=[6,8)\]
+                \[A_7=[8,10)\]
+                \[A_8=[7,11)\]
+                \[A_9=[10,14)\]
+                Now, we have \(a_{min}=A_2\), since it has the least finish time. Now, we don't need to consider
+                \(A_1\) since \(A_1\) overlaps with \(A_2\). <br>
+                Once again, we choose \(a_{min}\) from the remaining set. This comes out to be \(A_3\). So, we
+                can now ignore \(A_4\) and \(A_5\). <br>
+                Next, \(a_{min}\) comes out to be \(A_6\) and so, we ignore \(A_8\). <br>
+                Finally, we choose the remaining two elements \(A_7\) and \(A_9\) (since they don't overlap). <br>
+                So, our final solution is \(\{A_2, A_3, A_6, A_7, A_9\}\).
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="div2">
+            <a id="huffman"></a>
+            <h1>Huffman Codes</h1>
+            <p>
+                This is an algorithm using which we can encode a string having a certain number of characters.
+                It provides an efficient way to send data by compressing it.<br><br>
+                Let us first consider a scenario, before looking at the algorithm itself. <br>
+                Say we have the string T with alphabets \(\{A, B, C, D\}\) such that we have - <br>
+                <ul>
+                    <li>70 million \(A\)s</li>
+                    <li>3 million \(B\)s</li>
+                    <li>20 million \(C\)s</li>
+                    <li>37 million \(D\)s</li>
+                </ul>
+                So, \(T\) has 130 million characters. <br><br>
+                Since there are 4 characters, our first plan may be to assign each character a 2-bit number 
+                like so - <br>
+                <ul>
+                    <li>\(A\) - 00</li>
+                    <li>\(B\) - 01</li>
+                    <li>\(C\) - 10</li>
+                    <li>\(D\) - 11</li>
+                </ul>
+                This would require \(130\times2=260\) million bits or 260 megabits to store. <br><br>
+                Now, consider another scenario, wherein we represent each character as so - <br>
+                <ul>
+                    <li>\(A\) - 0</li>
+                    <li>\(B\) - 100</li>
+                    <li>\(C\) - 101</li>
+                    <li>\(D\) - 11</li>
+                </ul>
+                In this encoding, we're assigning bit strings with different lengths. The shorter strings 
+                are assigned to the character with greater number of occureneces. <br>
+                Notice that in this encoding, there is no ambiguity despite having variable string lengths.
+                This encoding follows the <b>prefix-free</b> property, which means that no encoding is a prefix of 
+                any other encoding. This makes decoding the bit string much easier. This encoding can be modeled 
+                as a full binary tree (all parent nodes have two children) (0 to the left, 1 to the right). <br>
+                With this encoding, we need (\(1 \times 70 + 3 \times 3 + 3 \times 20 + 2 \times 37\)) million = 213 
+                million bits to store the string, which is better than the first encoding. <br><br>
+                Using Huffman codes, we will be able to get an even better encoding. <br>
+                This encoding also follows the prefix-free property. <br>
+                For this algorithm, we need to find the binary tree whose leaves correspond to an alphabet and 
+                which minimizes the length of the encoding.
+                Similar the second scenario, it would be better to assign the shorter strings to the alphabets
+                which occur more frequently. So, we may assign a cost to the trees like so - <br>
+                \[Cost \ of \ tree = \sum_i^nf_i\cdot(depth\ of\ i^{th}\ symbol\ in\ tree)\]
+                where \(f_i\) is the frequency of the \(i^{th}\) symbol and the depth of the symbol is just the length 
+                of the bit encoding of the symbol. <br>
+                We need to find the tree with the least cost. <br>
+                It turns out that we can use the greedy choice property and optimum substructure property to come up with 
+                a greedy algorithm for this problem. <br>
+                Let's define the frequency of an internal node to be the sum of the frequencies of its descendant leaves. 
+                Then, the cost of a tree becomes the sum of the frequencies of all the leaves and internal nodes, 
+                except the root. <br><br>
+                <b>Greedy choice -</b>
+                Since we want to designate bigger length encodings for symbols with lesser frequencies, the two least frequency 
+                symbols must occur at the leaves of the optimal solution. If that were not the case, then we could just replace 
+                the leave nodes with the two least frequency symbols, which would reduce the cost of the tree (but then the 
+                previous tree wouldn't have been optimum!). <br><br>
+                <b>Optimum substructure -</b>
+                Once we have identified the two leaves with the least frequencies (say \(f_1\) and \(f_2\)), we remove the two 
+                corresponding symbols (and their leaves) and add in a new symbol which would be a combination of the previous 
+                two symbols (the parent node of the two leaves becomes a leaf). The frequency of this new symbol would be 
+                \(f_1+f_2\). Now, we just solve for Huffman's code again. <br><br>
+                So, essentially, the algorithm becomes - <br>
+                <ol class="colorOL">
+                    <li>Start with an empty graph \(G\)</li>
+                    <li>Find frequencies of all the alphabets</li>
+                    <li>Pick the two alphabets with the smallest frequencies, say \(a\) and \(b\) with \(|a| < |b|\)</li>
+                    <li>Add a node to the graph with \(a\) as the left child and \(b\) as the right child</li>
+                    <li>Set the frequency of the node as the sum of the frequencies of \(a\) and \(b\)</li>
+                    <li>Repeat steps 3 to 5 until all alphabets are picked</li>
+                </ol>
+            </p>
+                Now, let us consider an example to understand better. <br>
+                Let's say we have a string <b>\(T=abdcdaddc\)</b>, with alphabets \(a,b,c,d\). <br>
+                Using fixed length encoding (scenario 1), we would need \(2 \times 9 = 18\) bits for this string. <br><br>
+                Now, let us use Huffman encoding (click the picture) - 
+            </p>
+                <img src="../img/huffman/1.png" id="huffman_img" onclick="huffman_change(this.src)" title="Click the picture!" 
+                alt="Set of 5 images">
+            <p id="huffman_p1">
+                First, we find the frequency of each alphabet. We have \(2\ a\)'s, \(1\ b\), \(2\ c\)'s, and \(4\ d\)'s. So,
+                we have the nodes (\(a,2\)), (\(b,1\)), (\(c,2\)), and (\(d,4\)).
+            </p>
+            <p id="huffman_p2">
+                We can see that \(a\) and \(b\) have the lowest frequencies. So, we add a node \(ab\) to the graph and add 
+                \(b\) as the left child and \(a\) as the right child. <br>
+                The frequency of \(ab\) is the sum of the frequencies of \(a\) and \(b\), which is 3.
+            </p>
+            <p id="huffman_p3">
+                Now, we can see that \(c\) and \(ab\) have the lowest frequencies. So, we add a node \(abc\) to the graph 
+                and add \(c\) as the left child and \(ab\) as the right child (since \(|c| < |ab|\)). <br>
+                The frequency of \(abc\) is \(2+3=5\).
+            </p>
+            <p id="huffman_p4">
+                Now, we have only two nodes that haven't beem picked - \(abc,5\) and \(d,4\). So, we add a node \(abcd\) to 
+                the graph and add \(d\) as the left child and \(abc\) as the right child. <br>
+                The frequency of \(abcd\) is \(4+5=9\).
+            </p>
+            <p id="huffman_p5">
+                Finally, we label all the left branches as \(0\) and the right branches as \(1\).
+            </p>
+            <p>
+                So, we get the encoding as follows - 
+                <ul>
+                    <li>\(a\) - 111</li>
+                    <li>\(b\) - 110</li>
+                    <li>\(c\) - 10</li>
+                    <li>\(d\) - 0</li>
+                </ul>
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="div2">
+            <a id="set_cover"></a>
+            <h1>Set Cover</h1>
+            <p>
+                In this problem, we have a set of elements \(B\) and a family of sets \(S_1, S_2, ..., S_m\) which are 
+                subsets of \(B\). The output is the minimum collection of sets \(S_i\) whose union is \(B\). <br>
+                It turns out that this problem is NP-hard (there is no algorithm that can solve this problem in 
+                polynomial time). However, there does exist a greedy algorithm which can give an approximate solution. <br>
+                That is, this algorithm may or may not output the optimal solution. In the cases that it does not output
+                the optimal solution, it gives a solution that is reasonably valid. In fact, it can be proved that if
+                \(B\) contains \(n\) sets and the optimum cover has \(k\) sets, then the greedy algorithm will output 
+                a cover having at most \(k\cdot ln(n)\) sets. <br><br>
+                Now, the algorithm itself is extremely simple - pick the set \(S_i\) with the largest number of 
+                uncovered elements, until all elements of \(B\) have been covered. <br><br>
+                Let us consider an example for this problem - <br>
+                We have the sets {1,2,3}, {2,3,4}, {2,3,4,5}, {1,5}, {6,7}. Also, we have \(B = \{1,2,3,4,5,6,7\}\). <br>
+                (Note - The sets above need not involve numbers only). <br><br>
+                So, following the algorithm, we have - <br>
+                <ol>
+                    <li>{2,3,4,5} - Since in the first step all elements are uncovered, we simply choose the largest set.</li>
+                    <li>{6,7}</li>
+                    <li>{1,5}</li>
+                </ol>
+                So, our output is a set of size 3. <br>
+                We can see that it is not possible to have an output of set with size less than 3 and so, the algorithm 
+                produced the optimum result in this case. <br><br>
+                Now, let's consider another example - <br>
+                We have the sets {1,2,3,4}, {1,3,5}, {2,4,6}. Also, we have \(B\) = {1,2,3,4,5,6}. <br><br>
+                Following the algorithm, we have - <br>
+                <ol>
+                    <li>{1,2,3,4}</li>
+                    <li>{1,3,5}</li>
+                    <li>{2,4,6}</li>
+                </ol>
+                So, our output is a set of size 3. <br>
+                However, it's clear that there exists an output with just size 2 - {1,3,5} and {2,4,6}. So, the solution 
+                we got is not optimum. <br><br>
+            </p>
+            <button class="hiddenPbtn" onclick="hideP()">Click here for an interesting fact!</button>
+            <p id="hiddenP">
+                This algorithm was used by IBM to find viruses that had corrupted some codes in a computer. <br>
+                The set of elements here was the set of known viruses (which was around 5000!). The family of sets was 
+                the substrings of 20 or more consecutive bytes, which were found only in those codes that were known 
+                to be infected. There were around 9000 such substrings. <br>
+                IBM found a set cover of size 180. This allowed them to just search for these 180 substrings to find the 
+                viruses.
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+        
+        <script src="../js/script.js"></script>
+        <script src="../js/Greedy.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

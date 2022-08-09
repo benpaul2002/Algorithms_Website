@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Divide & Conquer</title>
+        
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="../css/DnC.css">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="navbar">
+            <a href="index.html">Home</a>
+            <a href="DnC.html">Divide & Conquer</a>
+            <a href="Greedy.html">Greedy</a>
+            <a href="DP.html">Dynamic Programming</a>
+        </div>
+        
+        <div class="div1">
+            <a id="DnC"></a>
+            <p class="header">Divide and Conquer Algorithms</p>
+            <hr>
+        </div>
+        
+        <div class="div2">
+            <a id="mergesort"></a>
+            <h1> Introduction and Merge Sort </h1>
+            <p>
+                Every Divide & Conquer algorithm involves taking a problem
+                and breaking it down into smaller sub-problems which are easier
+                to solve. This breakdown is done recursively and by the time
+                we reach the last recursive step, the sub-problems will have
+                become trivial to solve. Once solved, the sub-problems are 
+                combined to solve the initial problem. <br> <br>
+                Divide & Conquer can be best understood using merge sort. In 
+                this, we break an array (which represents the main problem) 
+                into two smaller arrays (the sub-problems). We then break these
+                smaller arrays again (recursively) until we're left with arrays 
+                of size 1 or 2. Sorting such arrays are trivial. We then combine 
+                these sorted arrays until we get back the main array in sorted 
+                order. <br><br>
+                Press the button below to simulate an example merge sort -
+            </p>
+            <br>
+            <table id="egelem1" class="eg"> <tr> <td id="egtd1">8</td> </tr> </table>
+            <table id="egelem2" class="eg"> <tr> <td id="egtd2">2</td> </tr> </table>
+            <table id="egelem3" class="eg"> <tr> <td id="egtd3">1</td> </tr> </table>
+            <table id="egelem4" class="eg"> <tr> <td id="egtd4">5</td> </tr> </table>
+            <table id="egelem5" class="eg"> <tr> <td id="egtd5">3</td> </tr> </table>
+            <table id="egelem6" class="eg"> <tr> <td id="egtd6">6</td> </tr> </table>
+            <table id="egelem7" class="eg"> <tr> <td id="egtd7">7</td> </tr> </table>
+            <table id="egelem8" class="eg"> <tr> <td id="egtd8">4</td> </tr> </table>
+
+        </div>
+        <br><br><br><br>
+        <div class="div3">
+            <button id="egmergebutton" onclick="merge_sort_animation()">Sort the array!</button>
+        </div>
+        <div class="div4">
+            <h2>Merge Sort Implementation</h2>
+            <pre>
+    void sort(int a[], int l, int r) {
+        if(l==r-1) {
+            int temp;
+            if(a[l]>a[r]) {
+                temp = a[l];
+                a[l] = a[r];
+                a[r] = temp;
+            }
+            return;
+        }
+        if(l==r) {
+            return;
+        }
+        int mid = (l+r)/2;
+        sort(a, l, mid);
+        sort(a, mid+1, r);
+        int i=l, j=mid+1, n=r-l+1, k=0;
+        int b[n];
+        while(i<=mid && j<=r) {
+            if(a[i]>a[j]) {
+                b[k] = a[j];
+                j++;
+            }
+            else {
+                b[k] = a[i];
+                i++;
+            }
+            k++;
+        }
+        while(i<=mid) {
+            b[k] = a[i];
+            i++;
+            k++;
+        }
+        while(j<=r) {
+            b[k] = a[j];
+            j++;
+            k++;
+        }
+        for(i=l, k=0; i<=r; i++, k++) {
+            a[i] = b[k]; 
+        }
+    }
+            </pre>
+        </div>
+        <div class="div2">
+            The time complexity of merge sort is \(O(nlogn)\). To see how the 
+            complexity was determined, scroll down to the Master Theorem.
+        </div>
+        <hr>
+        <br><br>
+
+        <div class="div5">
+            <a id="mastertheorem"></a>
+            <h1> Master Theorem </h1>
+            <p>
+                The Master Theorem is an incredibly useful theorem used to
+                determine the time complexity of divide & conquer algorithms.
+                According to the theorem, if we have a recurrence relation
+                like so -
+                \[T(n)=aT(\lceil\frac{n}{b}\rceil)+O(n^d)\]
+                where \(a>0\), \(b>1\), and \(d≥0\), then -
+                \[T(n) = \begin{cases}
+                O(n^d)\quad\quad\quad if\hspace{1.5mm} d>log_ba\\
+                O(n^dlogn)\quad\hspace{0.5mm} if\hspace{1.5mm} d=log_ba\\
+                O(n^{log_ba})\quad\hspace{5.5mm} if\hspace{1.5mm} d < log_ba\\
+                \end{cases}\]<br>
+                Now, let's consider merge sort as an example. Suppose we're
+                trying to merge two arrays having sizes \(x\) and \(y\) such
+                that \(x+y=n\).
+                Then, we'll get the recursive relation as 
+                \(T(n) = 2T(\frac{n}{2}) + O(n)\).<br>
+                Why is this so? <br>
+                \(T(n)\) represents the time required to sort an array of size 
+                \(n\). The sorting is done by sorting two smaller sub-arrays, 
+                which will take \(T(\frac{n}{2})\) time. The merging takes
+                linear time. So, together, we get \(T(n) = 2T(\frac{n}{2}) + 
+                O(n)\).<br>
+                Here, \(a=2\), \(b=2\), and \(d=1\). \(log_ba\) evaluates to 1,
+                which is equal to \(d\). So, \(T(n)=O(n^1logn) = O(nlogn)\).
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="div5">
+            <a id="strassen"></a>
+            <h1> Strassen Algorithm for Matrix Multiplication </h1>
+            <p>
+                Let's say we have two \(n \times n\) matrices \(X\) and \(Y\) and
+                we wish to multiply them together. We may use the naive algorithm
+                and multiply the rows of \(A\) with the columns of \(B\) and add
+                the values together. However, this is inefficient. The multiplication
+                takes \(O(n)\) time since we're doing it for \(n\) elements in each
+                row and column.
+                Since there are \(n^2\) total elements, the total time is \(O(n^3)\).
+                <br><br>
+                The Strassen algorithm provides a faster way using Divide & Conquer. <br>
+                Here, we break up the \(n \times n\) matrices into four \(\frac{n}{2} 
+                \times \frac{n}{2}\) matrices. So, we have - 
+                \[X=\begin{bmatrix}
+                A & B\\
+                C & D
+                \end{bmatrix}
+                \hspace{10mm}
+                Y = \begin{bmatrix}
+                E & F\\
+                G & H
+                \end{bmatrix}\]
+                where \(A,B,C,D\) and \(E,F,G,H\) are all \(\frac{n}{2} \times 
+                \frac{n}{2}\) matrices.
+                Then, we get - 
+                \[XY = \begin{bmatrix}
+                A & B\\
+                C & D
+                \end{bmatrix}
+                \begin{bmatrix}
+                E & F\\
+                G & H
+                \end{bmatrix}\]
+                Now, here, we could multiply these matrices like normal and get - 
+                \[XY=\begin{bmatrix}
+                AE+BG & AF+BH\\
+                CE+DG & CF+DH
+                \end{bmatrix}\]
+                However, notice that this require 8 multiplications and our time complexity
+                (using Master Theorem) would come out to be \(T(n) = 8T(\frac{n}{2}) + O(n^2)\)
+                which simplifies to \(O(n^3)\). This is the same as the naive method. <br>
+                So, we need to somehow reduce the number of multiplications. <br>
+                Volker Strassen, a German mathematician, showed that if we do - 
+                \[XY = \begin{bmatrix}
+                P_5+P_4-P_2+P_6 & P_1+P_2\\
+                P_3+P_4 & P_1+P_5-P_3-P_7
+                \end{bmatrix}\]
+                where
+                \[P_1 = A(F-H)\]
+                \[P_2 = (A+B)H\]
+                \[P_3 = (C+D)E\]
+                \[P_4 = D(G-E)\]
+                \[P_5 = (A+D)(E+H)\]
+                \[P_6 = (B-D)(G+H)\]
+                \[P_7 = (A-C)(E+F)\]
+                then we will have only 7 multiplications. <br>
+                Now, the time complexity comes out to be \(T(n) = 7T(\frac{n}{2}) + O(n^2)\),
+                which simplifies to \(O(n^{log_27}) ≈ O(n^{2.8})\).
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="div5">
+            <a id="selection"></a>
+            <h1>Median and Selection</h1>
+            <p>
+                The median refers to the element in the middle of an array that is sorted.<br>
+                Selection refers to finding the \(k^{th}\) smallest element from an array, which 
+                is essentially a generalization of finding the median. So, by solving the problem
+                of selection, we will have solved the problem of finding median as well. <br><br>
+                Let's say the array that we have is \(S\), having size \(n\). <br>
+                We first split the array into three sub-arrays \(S_L, S_V, S_R\), such that - <br>
+            </p>
+            <p class="centerp">
+                \(S_L\) represents all the elements of the array which are lesser than \(v\). <br>
+                \(S_V\) represents all the elements of the array which are equal to \(v\). <br>
+                \(S_R\) represents all the elements of the array which are greater than \(v\). <br>
+            </p>
+            <p>
+                This splitting will take linear time since we will need to iterate throught the
+                array once. <br>
+                Now, we do - 
+                \[selection(S,k) = 
+                \begin{cases}
+                selection(S_L,k)\hspace{59.5mm} if\hspace{5mm} k≤|S_L|\\
+                v\hspace{105mm} if\hspace{5mm} |S_L| < k \leq |S_L|+|S_V|\\
+                selection(S_R,k-|S_L|-|S_V|) \hspace{15mm} if\hspace{5mm} k > |S_L|+|S_V|\\
+                \end{cases}\] <br>
+                But what is the value of \(v\)? <br><br>
+                We choose \(v\) to be the median of medians. We do this by dividing \(S\) into 5
+                parts to form 5 sub-arrays of \(\frac{n}{5}\) elements each. We then find the median 
+                of each sub-array. Finding all 5 medians can be done in linear time (since finding 
+                the median of one sub-array involves iterating through the array once ; then we 
+                do the same a constant number of times). Then, we find the median of these 5 medians, 
+                which can be done using recursion. This will be our choice for v. <br><br>
+                This median of medians that we choose is, by definition, greater than half of all the 
+                5 medians that we computed. However, each of these medians is greater than half of all 
+                the \(\frac{n}{5}\) elements of their corresponding sub-array. So, this median of 
+                medians (\(v\)) is greater than at least \(3(\frac{1}{2}(\frac{n}{5}) - 2) 
+                = \frac{3n}{10} - 6\) elements of \(S\). Similarly, \(v\) is lesser than \(\frac{3n}{10} 
+                - 6\) elements of \(S\).<br><br>
+                The time complexity of this algorithm turns out to be \(O(1)\), which is far better
+                compared to the naive method of finding median (mergesort and find middle element),
+                which takes \(O(nlogn)\).
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="div5">
+            <a id="fft"></a>
+            <h1>Fast Fourier Transform</h1>
+            <p>
+                The Fast Fourier Transform is an algorithm which runs in \(O(dlogd)\) time. Of 
+                course, it uses Divide & Conquer. <br><br>
+                Before looking at the algorithm itself, let us look at how this algorithm came about
+                as this would help us to understand it better. We specifically look at its use in 
+                polynomial multiplication. <br>
+                Let's say that we have two polynomials \(A\) and \(B\) such that - 
+                \[A(x) = a_0 + a_1x + a_2x^2 + ...\  + a_dx^d\]
+                \[B(x) = b_0 + b_1x + b_2x^2 + ...\  + b_dx^d\]
+                We want to compute \(C\), the product of \(A\) and \(B\). <br>
+                First, let us represent \(A\) and \(B\) in a different way. Currently, we have written
+                them in terms of their coefficients. Similar to how we can identify a line given
+                two points on the line, we can also identify a \(d\) degree polynomial given
+                \(d+1\) points on the polynomial (the points must be distinct). This representation
+                is called <b>value representation</b>.
+                Value representation allows the multiplication step to be completed in linear time as it 
+                involves only multiplying the individual points of the two polynomials (which can be 
+                done in constant time), for every point. That is - 
+                \[C(x_i) = A(x_i) \cdot B(x_i)\]
+                where \(x_i\) is a point. <br>
+                However, there is a drawback. Finding these \(d+1\) points requires us to evaluate the
+                polynomial \(d+1\) times. Each evaluation takes linear time and so, the total time 
+                required becomes \(O(d^2)\). So, using this method will result in an algorithm that is
+                (at best) as fast as the naive algorithm. <br><br>
+                This is where Divide & Conquer comes in. <br>
+                First, we split the \(d\) degree polynomials \(A\) and \(B\) into two \(\frac{d}{2}\)
+                degree polynomials each. We can do this by taking all the even coefficients of a
+                \(d\) degree polynomial and forming a \(\frac{d}{2}\) degree polynomial. We do the same
+                for odd coefficients. Let's say the new polynomials that we get are \(A_e\) and \(A_o\)
+                (similar for \(B\)). <br>
+                Doing this allows us to write \(A\) like so - 
+                \[A(x) = A_e(x^2) + xA_o(x^2)\]
+            </p>
+            <button class="hiddenPbtn" onclick="hideP()">What? How?</button>
+            <p id="hiddenP">
+                Let's take an example to understand better! <br>
+                Say we have \(A(x) = 5+2x+6x^2+3x^3+7x^4+8x^5\). Then, we can split up \(A\) like so - 
+                \[A_e(x) = 5+6x+7x^2\]
+                \[A_o(x) = 2+3x+8x^2\]
+                So, \(A_e(x^2)\) evaluates to \(5+6x^2+7x^4\) and \(A_o(x^2)\) evaluates to 
+                \(2+3x^2+8x^4\). Clearly, \(A(x) = A_e(x^2) + xA_o(x^2)\).
+            </p>
+            <p>
+                Evaluating polynomials after splitting like this takes \(T(n) = 2T(n/2) + O(n)\), which 
+                simplifies to \(O(nlogn)\). So, this is actually slower than our previous method 
+                (normal evaluation without any splitting takes linear time). <br>
+                However, this method allows us to not only evaluate \(A(x)\) for some \(x\), but also
+                \(A(-x)\). We can do this using - 
+                \[A(-x) = A_e(x^2) - xA_o(x^2)\]
+                So, to evaluate \(A(x)\) at \(d\) paired points \(±x_0, ±x_1, ...., ±x_{\frac{d}{2}-1}\), 
+                we only need to evaluate \(A_e(x)\) and \(A_o(x)\) at \(\frac{d}{2}\) points 
+                \(x_0^2, x_1^2, ..., x_{\frac{d}{2}-1}^2\). We can use recursion to further evaluate 
+                \(A_e\)  and \(A_o\). <br>
+                However, this will only work for the first recursion step since we have the +/- pairs 
+                that we mentioned before. In the second step, this is not possible since we need to 
+                evaluate \(A_e\) and \(A_o\) at \(x_0^2, x_1^2, ..., x_{\frac{d}{2}-1}^2\). <br>
+                Why is it not possible? <br>
+                Because none of \(x_0^2, x_1^2, ..., x_{\frac{d}{2}-1}^2\) are +/- pairs of each other 
+                (a squared number cannot be negative; so \(x_0^2, x_1^2, ..., x_{\frac{d}{2}-1}^2\) are 
+                all positive). <br>
+                This can be solved by using complex numbers. <br>
+                But now we have the question - which complex numbers do we choose to get the proper pairs? 
+                We can determine this by starting from the bottom. <br>
+                Let's assume our last point is +1. Then, the two points of the previous step would be the 
+                square roots of +1, which is +1 and -1. Then, the previous four points would be +1, -1, +i, 
+                and -i. And we continue till we reach the top. <br><br>
+                Let \(n\) be the number of points we need to choose. So, since we can choose any \(n > 2d\), 
+                let's pick \(n\) to be the smallest power of 2 which is greater than \(2d\). Then, the \(n\) 
+                points to be evaluated are the \(n^{th}\) roots of +1. <br><br>
+            </p>
+            <p id="pclass">
+                To summarize, we have the final algorithm for FFT as - <br><br>
+                function FFT(\(A, \omega\)): <br>
+                &emsp;&ensp; Input: A \(d\)-degree polynomial \(A(x)\) in coefficient representation with 
+                \(d < n\); \(n\) is a power of 2 <br>
+                &emsp;&ensp;&emsp;&ensp; \(\omega = e^{2\pi i/n}\), an \(n^{th}\) root of +1 <br><br>
+                &emsp;&ensp; Output: Value representation \(A(\omega^0),A(\omega^1),...,A(\omega^{n-1})\) <br><br>
+      
+                &emsp;&ensp; if \(\omega\) = 1: <br>
+                &emsp;&ensp;&emsp;&ensp; return \(A(1)\) <br><br>
+      
+                &emsp;&ensp; Compute \(A_e(x)\) and \(A_o(x)\) <br>
+      
+                &emsp;&ensp; Represent \(A(x)\) as \(A_e(x^2) + xA_o(x^2)\) <br><br>
+                &emsp;&ensp; \(FFT(A_e, \omega^2)\) <br>
+                &emsp;&ensp; \(FFT(A_o, \omega^2)\) <br><br>
+      
+                &emsp;&ensp; for \(j=0,1,....,n-1\): <br>
+                &emsp;&ensp;&emsp;&ensp; compute \(A(\omega^j) = A_e(\omega^{2j})+\omega^j A_o(\omega^{2j})\) <br><br>
+                &emsp;&ensp; return <br><br>
+            </p>
+        </div>
+        <br>
+        <hr class="lastline">
+        <br><br>
+
+        <script src="../js/script.js"></script>
+        <script src="../js/DnC.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

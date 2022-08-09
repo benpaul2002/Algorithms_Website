@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    background-color: blanchedalmond;
+    font-family: 'PT Serif', serif;
+}
+
+#navbar {
+    background-color: #237471;
+    overflow: hidden;
+}
+
+#navbar a {
+    float: left;
+    text-align: center;
+    text-decoration: none;
+    color: #ffffff;
+    padding: 1% 2%;
+    font-size: 1.3vw;
+}
+
+#navbar a:hover {
+    background-color: #34aaa6;
+}
+
+.pos {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.pos + .div1 {
+    padding-top: 120px;
+}

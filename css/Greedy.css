@@ -1,0 +1,77 @@
+.div1 {
+    padding: 3%;
+    margin-left: 9%;
+    margin-right: 9%;
+}
+
+.header {
+    color: #237471;
+    text-align: center;
+    font-size: 3.2vw;
+}
+
+hr {
+    width: 36%;
+}
+
+.div2 {
+    margin-left: 9%;
+    margin-right: 13%;
+    margin-bottom: 2%;
+    font-size: 1.4vw;
+    font-family: 'EB Garamond', serif;
+}
+
+.colorOL {
+    background-color: rgb(251, 218, 167);
+    border-radius: 25px;
+    padding-left: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 1.3vw;
+}
+
+li {
+    padding: 3px;
+}
+
+.as_img {
+    width: 80%;
+    height: 50%;
+    margin-left: 12%;
+    border-radius: 25px;
+}
+
+#huffman_img {
+    width: 30%;
+    margin-left: 37%;
+}
+
+#huffman_img:hover {
+    cursor: pointer;
+}
+
+#huffman_p2, #huffman_p3, #huffman_p4, #huffman_p5 {
+    display: none;
+}
+
+.hiddenPbtn {
+    border: none;
+    color: #237471;
+    background-color: blanchedalmond;
+    font-size: 1.4vw;
+    margin-left: 0;
+    padding: 0;
+}
+
+.hiddenPbtn:hover {
+    color: #34aaa6;
+    cursor: pointer;
+}
+
+#hiddenP {
+    display: none;
+    background-color: rgb(251, 218, 167);
+    border-radius: 25px;
+    padding: 25px;
+}

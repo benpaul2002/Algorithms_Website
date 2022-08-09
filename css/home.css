@@ -1,0 +1,69 @@
+.div1 {
+    margin-left: 9%;
+    margin-right: 13%;
+    margin-bottom: 2%;
+    font-size: 3.3vw;
+    color: #237471;
+    text-align: center;
+    font-family: 'Architects Daughter', cursive;
+}
+
+.div2 {
+    margin-top: 6%;
+    margin-left: 9%;
+    margin-right: 13%;
+    margin-bottom: 2%;
+    font-size: 3.3vw;
+    font-family: 'EB Garamond', serif;
+}
+
+h1, h4 {
+    margin-block-start: 0.67em;
+    margin-block-end: 0.25em;
+}
+
+
+hr {
+    width: 50%;
+    height: 6px;
+    background: #217471;
+    border-radius: 45%;
+}
+
+p {
+    font-size: 40px;
+}
+
+.div3 {
+    margin-left: 9%;
+    margin-right: 13%;
+    margin-bottom: 2%;
+    font-size: 3.3vw;
+    font-family: 'EB Garamond', serif;
+}
+
+.div3 input {
+    width: 70%;
+    padding: 20px 20px;
+    margin-left: 8%;
+    font-size: 20px;
+    display: inline-block;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.div3 button {
+    width: 20%;
+    background-color: #237471;
+    color: white;
+    padding: 20px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.div3 button:hover {
+    cursor: pointer;
+    background-color: #34aaa6;
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dynamic Programming</title>
+        
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="../css/DP.css">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="navbar">
+            <a href="index.html">Home</a>
+            <a href="DnC.html">Divide & Conquer</a>
+            <a href="Greedy.html">Greedy</a>
+            <a href="DP.html">Dynamic Programming</a>
+        </div>
+        
+        <div class="div1">
+            <a id="dp"></a>
+            <p class="header">Dynamic Programming</p>
+            <hr>
+        </div>
+        
+        <div class="div2">
+            <h1>Introduction</h1>
+            <p>
+                Dynamic Programming algorithms involve taking a problem and breaking it down to smaller sub-problems
+                recursively. The solution to each sub-problem is stored so as to avoid computation of that sub-problem, 
+                should it arise again. This allows the overall problem to solved efficiently as well. <br><br>
+                In general, for a dynamic programming problem, we have 3 steps - 
+                <ol>
+                    <li>Getting the subproblems such that a <b>Directed Acyclic Graph (DAG)</b> can be formed</li>
+                    <li>Getting the formula by using the DAG to pose the problem</li>
+                    <li>Executing the formula in the correct order</li>
+                </ol>
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="div2">
+            <a id="fibonacci"></a>
+            <h1>\(n^{th}\) Fibonacci Number</h1>
+            <p>
+                Dynamic Programming is best understood using the example of finding the \(n^{th}\) Fibonacci number. <br><br>
+                Since the Fibonacci sequence is a sequence of numbers such that any number is the sum of the previous 
+                two numbers (first two numbers are 0 and 1 respectively), we can easily find the \(n^{th}\) Fibonacci 
+                number using the following recursive algorithm - 
+                \[f(n) = f(n-1) + f(n-2)\] <br>
+                However, it turns out that this is inefficient. <br>
+                For example, if we use this algorithm to find \(f(4\), then we would first recursively call \(f(3)\) and 
+                \(f(2)\). However, \(f(3)\) will in turn call \(f(2)\) and \(f(1)\). <br>
+                Immediately we can see that \(f(2)\) is computed twice. While this is acceptable for small values of \(n\), 
+                this algorithm will become extremely slow for even slightly large values of \(n\), say 50. <br><br>
+                This is where Dynamic Programming comes in. Most of the algorithm remains the same as above. All we need 
+                to do is store the value of any Fibonacci number that is computed. <br>
+                So, by the time we compute \(f(3)\), we will have already stored the value of \(f(2)\). So, we avoid extra 
+                computations and the algorithm becomes far more effecient.
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="div2">
+            <a id="shortest_path"></a>
+            <h1>Shortest Path in DAG</h1>
+            <p>
+                In this problem, we are given a DAG, a source and a destination, and we need to find the shortest distance 
+                between the source and the destination. <br>
+                In this problem, we will require toposort.
+            </p>
+            <button class="hiddenPbtn" onclick="hideP('hiddenP1')">What's that?</button>
+            <p id="hiddenP1">
+                Toposort is an algorithm which is used to sort the nodes of a directed graph in such a way that for every 
+                directed edge from a node \(A\) to a node \(B\), node \(A\) appears before node \(B\). <br><br>
+                A real world example of this - Say you want to enroll in a particular course in a university. You will first 
+                have to complete all the prerequisites for that course, and those prerequisites may have prerequisites of 
+                their own. Toposort will give you the order (there may be multiple correct orders) in which you can take each 
+                course so as to enable you to take the course you desire. <br><br>
+                Essentially, if you have a directed graph and you do toposort on it, you will get an order where each edge 
+                from a node points to a node on the right. <br><br>
+                For more information, 
+                <a class="extlink" target="_blank" href="https://www.geeksforgeeks.org/topological-sorting/">check this article 
+                from GeeksforGeeks!</a>
+            </p>
+            <p>
+                Now, for this problem, let us assume we have a DAG with nodes \(s, v_1, v_2, ..., v_{n-2}, d\), where \(s\) is 
+                the source and \(d\) is the destination. <br>
+                First, we do toposort on the DAG. Assume, without any loss in generality, that the resulting order is \(s, v_1, 
+                v_2, ..., v_{n-2}, d\). <br><br>
+                Notice that, using this order, we can easily break the problem into subproblems. <br>
+                For example, the shortest path from \(s\) to \(d\) is the shortest path from \(s\) to \(u\) and the edge 
+                connecting \(u\) to \(d\). Here, \(u\) is the node which is connected to \(d\) and is the shortest distance away 
+                from \(s\). <br><br>
+                Now, consider the following algorithm - <br>
+            </p>
+            <p class="coloredP">
+                &emsp;&ensp;initialize \(dist(v)\) to be \(\infty\) for every node \(v\) <br>
+                &emsp;&ensp;\(dist(s) = 0\) <br>
+                &emsp;&ensp;for each \(v \in V\backslash \{s\}\) <br>
+                &emsp;&ensp;\(dist(v) = min_{(u,v)\in E}\{dist(u)+l(u,v)\}\)
+            </p>
+            <p>
+                Here, \(dist(v)\) represents shortest path from \(s\) to \(v\). <br>
+                \(V\backslash \{s\}\) represents the set \(V\) without the element \(s\). <br> 
+                \(l(u,v)\) represents the weight of the edge between \(u\) and \(v\). <br><br>
+                So, this algorithm helps us find the shortest path in DAG fairly easily.
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="div2">
+            <a id="lis"></a>
+            <h1>Longest Increasing Subsequence</h1>
+            <p>
+                A subsequence of a sequence can be obtained by removing some (or even none) of the elements of the sequence, 
+                while maintaining the order of the sequence. <br>
+                An increasing subsequence is a subsequence where the elements are sorted in ascending order. <br><br>
+                So, in this problem, we are given a sequence of numbers. We are required to find the largest of all the 
+                increasing subsequences of this sequence. <br><br>
+                Let's say we have the sequence \(a_1, a_2, ..., a_n\). <br>
+                Let's associate each element of the sequence to a node in a graph. There will be an edge between two nodes 
+                \(i\) and \(j\) if and only if \(a_i\) and \(a_j\) are consecutive elements of some increasing subsequence. 
+                That is, if \(i < j\), then there will be an edge from node \(i\) to node \(j\) if \(a_i < a_j\). <br><br> 
+                This is a graph of all permissible transitions. It is clear that this graph is a DAG. <br>
+                Every path in this DAG will be a valid increasing sequence. So, the output of our problem will be the longest 
+                of these paths. <br>
+                Note that we do not know our source here. The longest path may start from any node. <br><br>
+                Now, let \(L(j)\) represent the longest path ending at \(j\). So, we can break the problem into subproblems 
+                since \(L(j) = 1+max\{L(i):(i,j)\in E\}\), where \(i\) is a neighbour of \(j\). We're adding 1 since the edges 
+                don't have weights; we're just counting number of edges. <br>
+                So, we need to find \(L(j) \ \forall \ 1≤j≤n\). <br><br>
+                Consider the following algorithm - <br>
+            </p>
+            <p class="coloredP">
+                &emsp;&ensp;for \(j\) = 1, 2, ..., \(n\): <br>
+                &emsp;&ensp;&emsp;&ensp;\(L(j) = 1+max\{L(i):(i,j)\in E\}\) <br>
+                &emsp;&ensp;return \(max_jL(j)\) <br>
+            </p>
+            <p>
+                Note that to get the longest subsequence itself (and not just its length), we will need to store the indices 
+                where \(L(j)\) was maximum.
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="div2">
+            <a id="shortest_r_path"></a>
+            <h1>Shortest Reliable Path</h1>
+            <p>
+                In this problem, we need to find the shortest path between two points \(s\) and \(t\) of a graph \(G\) such that 
+                the path uses at most \(k\) edges.
+            </p>
+            <button class="hiddenPbtn" onclick="hideP('hiddenP2')">Why is this problem relevant?</button>
+            <p id="hiddenP2">
+                In networking, packets may get dropped at routers because of congestion and so, taking more than \(k\) jumps may 
+                cause the packets to never reach the destination.
+            </p>
+            <p>
+                Let \(dist(v,i)\) represent the length of the shortest path from \(s\) to \(v\) using at most \(i\) steps, where 
+                \(i≤k\). So, the final solution will be given by \(dist(t,k)\). <br>
+                Clearly, we can write \(dist(v,i)\) as \(min_{(u,v)\in E}\{dist(u,i-1)+l(u,v)\}\), where the \(u\) is the previous 
+                node (before \(v\)). <br><br>
+                In this manner, we can easily solve the entire problem. <br><br>
+                What happens if there is no path with less than or equal to \(k\) edges? Then, we will have no solution to this 
+                problem. <br>
+                What happens if \(k≥n\) (\(n\) is the number of edges in \(G\))? Then, this problem is the same as finding the 
+                shortest path. This case can be solved using a greedy approach, which is always preferred over other approaches.
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br><br>
+        
+        <script src="../js/script.js"></script>
+        <script src="../js/DP.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

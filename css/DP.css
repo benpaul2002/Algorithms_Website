@@ -1,0 +1,69 @@
+.div1 {
+    padding: 2.7%;
+    margin-left: 11%;
+    margin-right: 13%;
+}
+
+.header {
+    color: #237471;
+    text-align: center;
+    font-size: 3.2vw;
+}
+
+hr {
+    width: 40%;
+}
+
+.div2 {
+    margin-left: 9%;
+    margin-right: 13%;
+    margin-bottom: 2%;
+    font-size: 1.4vw;
+    font-family: 'EB Garamond', serif;
+}
+
+.div2 p {
+    font-size: 1.4vw;
+}
+
+li {
+    padding: 3px;
+}
+
+.hiddenPbtn {
+    border: none;
+    color: #237471;
+    background-color: blanchedalmond;
+    font-size: 1.4vw;
+    margin-left: 0;
+    padding: 0;
+}
+
+.hiddenPbtn:hover {
+    color: #34aaa6;
+    cursor: pointer;
+}
+
+#hiddenP1, #hiddenP2 {
+    display: none;
+    background-color: rgb(251, 218, 167);
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.extlink {
+    text-decoration: none;
+    color: #237471;
+}
+
+.extlink:hover {
+    color: #34aaa6;
+    cursor: pointer;
+}
+
+.coloredP {
+    background-color: rgb(251, 218, 167);
+    border-radius: 25px;
+    padding: 15px;
+    line-height: 45px;
+}
